@@ -1,18 +1,25 @@
-var fs = require('fs');
-var files = fs.readdirSync('images/');
-console.log(files);
+let dialogueOpen = false;
 
-fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/images')
-  .then(res => res.json())
-  .then(files => {
-    const feed = document.getElementById('feed');
-    files.forEach(file => {
-      if (file.type === 'file' && /\.(jpg|png|jpeg|webp|gif)$/i.test(file.name)) {
-        feed.insertAdjacentHTML('beforeend', `
-          <div class="post" loading="lazy">
-            <img src="${file.download_url}" alt="${file.name}">
-          </div>
-        `);
-      }
-    });
-  });
+function toggleDialogue() {
+  const contacts = document.getElementById('contacts');
+  const blurScreen = document.getElementById('blurScreen');
+  const list = document.getElementById('contactList');
+
+  if (dialogueOpen) {
+      // Hide it
+      list.style.opacity = '0';
+      contacts.style.width = '0';
+      contacts.style.opacity = '0';
+      blurScreen.style.opacity = '0';
+      blurScreen.style.width = '0';
+    } else {
+      // Show it
+      list.style.opacity = '1';
+      contacts.style.width = '300px';
+      contacts.style.opacity = '1';
+      blurScreen.style.opacity = '1';
+      blurScreen.style.width = '100vw';
+    }
+
+    dialogueOpen = !dialogueOpen;
+  }
